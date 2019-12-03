@@ -30,18 +30,47 @@ app.get('/api/v1/tours/:id', (req, res) => {
 
   const id = Number(req.params.id);
   // if (id > tours.length) {
+
+  const tour = tours.find(tour => tour.id === id);
   if (!tour) {
     return res.status(404).json({
       status: 'fail',
       message: 'invalid id'
     });
   }
-  const tour = tours.find(tour => tour.id === id);
   res.status(200).json({
     status: 'success',
     data: {
       tour
     }
+  });
+});
+app.patch('/api/v1/tours/:id', (req, res) => {
+  const id = Number(req.params.id);
+  if (id > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'invalid id'
+    });
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour: 'tour updated'
+    }
+  });
+});
+app.delete('/api/v1/tours/:id', (req, res) => {
+  const id = Number(req.params.id);
+  if (id > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'invalid id'
+    });
+  }
+  res.status(204).json({
+    status: 'success',
+    data: null
   });
 });
 
