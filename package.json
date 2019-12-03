@@ -4,7 +4,7 @@
   "description": "Natours api node js project. This project is taken from udemy course by Jonas Schmedtmann\"",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "author": "Abdulla Bashiroghlu",
   "license": "ISC",

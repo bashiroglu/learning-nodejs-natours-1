@@ -8,7 +8,7 @@ Used Languages and concepts:
 2. app.listen
 3. get, post
 4. fs, readFileSync
-5.
+5. morgan for middleware function
 6.
 7.
 8.
