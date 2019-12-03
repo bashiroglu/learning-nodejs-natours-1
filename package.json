@@ -1,0 +1,14 @@
+{
+  "name": "learning-nodejs-natours-1",
+  "version": "1.0.0",
+  "description": "Natours api node js project. This project is taken from udemy course by Jonas Schmedtmann\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abdulla Bashiroghlu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
