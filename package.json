@@ -4,11 +4,14 @@
   "description": "Natours api node js project. This project is taken from udemy course by Jonas Schmedtmann\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "author": "Abdulla Bashiroghlu",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
   }
 }
