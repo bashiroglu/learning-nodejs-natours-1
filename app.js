@@ -133,28 +133,33 @@ const updateUser = (req, res) => {
 // app.post('/api/v1/tours', addNewTour);
 // app.patch('/api/v1/tours/:id', updateTour);
 // app.delete('/api/v1/tours/:id', deleteTour);
+const userRouter = express.Router();
+const tourRouter = express.Router();
 
-app
-  .route('/api/v1/tours')
+tourRouter
+  .route('/')
   .get(getAllTours)
   .post(addNewTour);
 
-app
-  .route('/api/v1/tours/:id')
+tourRouter
+  .route('/:id')
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
 
-app
-  .route('/api/v1/users')
+userRouter
+  .route('/')
   .get(getAllUsers)
   .post(addNewUser);
 
-app
-  .route('/api/v1/users/:id')
+userRouter
+  .route('/:id')
   .get(getUser)
   .patch(updateUser)
   .delete(deleteUser);
+
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/tours', tourRouter);
 
 const port = 3000;
 app.listen(port, () => console.log(`server run in port: ${port}`));
