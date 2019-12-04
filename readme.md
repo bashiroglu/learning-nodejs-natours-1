@@ -9,8 +9,8 @@ Used Languages and concepts:
 3. get, post
 4. fs, readFileSync
 5. morgan for middleware function
-6.
-7.
+6. dotenv package
+7. 
 8.
 
 After download project files, in the project directory, you can run :
