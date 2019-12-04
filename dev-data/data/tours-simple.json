@@ -2,7 +2,7 @@
   {
     "id": 0,
     "name": "The Forest Hiker",
-    "duration": 5,
+    "duration": 6,
     "maxGroupSize": 25,
     "difficulty": "easy",
     "ratingsAverage": 4.7,
