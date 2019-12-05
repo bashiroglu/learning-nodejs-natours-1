@@ -11,7 +11,8 @@ Used Languages and concepts:
 5. morgan for middleware function
 6. dotenv package
 7. eslint use
-8. 
+8. mongoose
+9. 
 
 After download project files, in the project directory, you can run :
 

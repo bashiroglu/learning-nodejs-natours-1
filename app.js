@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -15,29 +15,6 @@ mongoose
   .then(() => {
     console.log('successful con.connections');
   });
-const tourSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'name is required'],
-    unique: true
-  },
-  rating: {
-    type: Number,
-    default: 4.5
-  },
-  price: {
-    type: Number,
-    required: [true, 'price is required']
-  }
-});
-const Tour = mongoose.model('Tour', tourSchema);
-const testTour = new Tour({ name: 'Xacmaz', rating: 4.7, price: 120 });
-testTour
-  .save()
-  .then(doc => {
-    console.log(doc);
-  })
-  .catch(err => console.log('error in saving document', err));
 
 const app = express();
 
