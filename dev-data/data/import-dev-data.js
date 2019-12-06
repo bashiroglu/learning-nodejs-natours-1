@@ -41,4 +41,8 @@ const deleteDataFromDb = async () => {
   }
   process.exit();
 };
-importData();
+if (process.argv[2] === '--import') {
+  importData();
+} else if (process.argv[2] === '--delete') {
+  deleteDataFromDb();
+}
