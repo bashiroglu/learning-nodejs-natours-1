@@ -13,8 +13,14 @@ exports.getAllTours = async (req, res) => {
       match => `$${match}`
     );
     const convertedObj = JSON.parse(convertedStr);
-    const query = Tour.find(convertedObj);
+    let query = Tour.find(convertedObj);
     //exucute query
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('createdAt');
+    }
     const tours = await query;
 
     //send response
