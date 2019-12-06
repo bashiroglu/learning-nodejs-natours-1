@@ -12,7 +12,8 @@ Used Languages and concepts:
 6. dotenv package
 7. eslint use
 8. mongoose
-9. 
+9. dotenv
+10. 
 
 After download project files, in the project directory, you can run :
 

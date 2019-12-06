@@ -1,20 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
-
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
-
-const DB = process.env.DATABASE_LOCAL;
-mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-  })
-  .then(() => {
-    console.log('successful con.connections');
-  });
 
 const app = express();
 
