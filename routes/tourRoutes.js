@@ -6,6 +6,10 @@ const tourControllers = require('../controllers/tourControllers');
 // router.param('id', tourControllers.checkId);
 
 router
+  .route('/top5tours')
+  .get(tourControllers.getTopTours, tourControllers.getAllTours);
+  
+router
   .route('/')
   .get(tourControllers.getAllTours)
   .post(tourControllers.addNewTour);
