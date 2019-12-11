@@ -13,11 +13,14 @@ Used Languages and concepts:
 7. eslint use
 8. mongoose
 9. dotenv
-10. 
+10. slugify
+11. validator
+12. module.exports
 
 After download project files, in the project directory, you can run :
 
 ### `npm start`
 
-the useful npm code to download all packages for eslint 
+the useful npm code to download all packages for eslint
+
 ### npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
