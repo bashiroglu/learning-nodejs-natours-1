@@ -30,7 +30,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'passwordConfirm is required'],
     trim: true,
-    minlength: [8, 'min 8 charachters']
+    minlength: [8, 'min 8 charachters'],
+    validate: {
+      validator: function(el) {
+        return el === this.password;
+      },
+      message: 'passwordConfirm and password shpuld be the same'
+    }
   }
 });
 const User = mongoose.model('User', userSchema);
