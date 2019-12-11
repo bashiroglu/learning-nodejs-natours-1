@@ -6,7 +6,10 @@ const handleCastErrorDB = err => {
 };
 
 const handleDublicateErrorDB = err => {
-  const message = `Dublicate name ${err.keyValue.name}`;
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+
+  const message = `Dublicate name ${value}, please use different value`;
+
   return new AppError(message, 400);
 };
 
@@ -46,7 +49,7 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     if (error.name === 'CastError') error = handleCastErrorDB(error);
-    if (error.name === 'MongoError') error = handleDublicateErrorDB(error);
+    if (error.code === 11000) error = handleDublicateErrorDB(error);
 
     sendErrorProd(error, res);
   }
