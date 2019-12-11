@@ -30,7 +30,6 @@ const port = process.env.PORT || 3000;
 const server = app.listen(port, () =>
   console.log(`server run in port: ${port}`)
 );
-console.log(x);
 
 process.on('unhandledRejection', err => {
   console.log(err.name, err.message);
