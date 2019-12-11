@@ -16,6 +16,8 @@ Used Languages and concepts:
 10. slugify
 11. validator
 12. module.exports
+13. jsonwebtoken package
+14. 
 
 After download project files, in the project directory, you can run :
 
