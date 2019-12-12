@@ -17,7 +17,12 @@ Used Languages and concepts:
 11. validator
 12. module.exports
 13. jsonwebtoken package
-14. 
+14. util.promisify
+15. Error handling
+16. 
+
+
+
 
 After download project files, in the project directory, you can run :
 
