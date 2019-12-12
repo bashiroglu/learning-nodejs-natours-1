@@ -14,7 +14,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm
+    passwordConfirm: req.body.passwordConfirm,
+    passwordChangedAt: req.body.passwordChangedAt
   });
 
   const token = signToken(newUser._id);
@@ -59,7 +60,18 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(new AppError('authorization', 401));
   }
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log(decoded);
 
+  const freshUser = await User.findById(decoded.id);
+  if (!freshUser) {
+    return next(new AppError('this user is not longer available', 401));
+  }
+  const isFreshUser = await freshUser.changedPasswordAfter(decoded.iat);
+  if (isFreshUser) {
+    return next(
+      new AppError('user recently changed password, please login again', 401)
+    );
+  }
+  //grant access
+  req.user = freshUser;
   next();
 });
