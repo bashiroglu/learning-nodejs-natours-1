@@ -35,7 +35,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email }).select('+password');
 
   if (!user || !(await user.comparePass(password, user.password))) {
-    return new AppError('incorrect email and pass', 401);
+    return next(new AppError('incorrect email and pass', 401));
   }
 
   const token = signToken(user._id);
@@ -43,4 +43,19 @@ exports.login = catchAsync(async (req, res, next) => {
     status: 'success',
     token
   });
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if (!token) {
+    return next(new AppError('authorization', 401));
+  }
+  next();
 });
