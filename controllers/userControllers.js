@@ -9,6 +9,27 @@ const filterObj = (obj, ...allowFields) => {
   });
   return newObj;
 };
+
+exports.updateMe = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(new AppError('this is not for to change password'), 400);
+  }
+
+  const filteredBody = filterObj(req.body, 'name', 'email');
+
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser
+    }
+  });
+});
+
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
@@ -22,15 +43,12 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-
-
 exports.getUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'route has not defined yet'
   });
 };
-
 
 exports.getUser = (req, res) => {
   res.status(500).json({
