@@ -1,6 +1,14 @@
 const User = require('./../models/userModel');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
+const filterObj = (obj, ...allowFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach(el => {
+    if (allowFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
@@ -13,24 +21,38 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+
+
 exports.getUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'route has not defined yet'
   });
 };
+
+
+exports.getUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'route has not defined yet'
+  });
+};
+
 exports.addNewUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'route has not defined yet'
   });
 };
+
 exports.deleteUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'route has not defined yet'
   });
 };
+
 exports.updateUser = (req, res) => {
   res.status(500).json({
     status: 'error',
