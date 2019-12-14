@@ -19,7 +19,9 @@ Used Languages and concepts:
 13. jsonwebtoken package
 14. util.promisify
 15. Error handling
-16. 
+16. crypto
+17. nodemailer
+18. 
 
 
 
