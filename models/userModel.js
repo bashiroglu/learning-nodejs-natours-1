@@ -57,7 +57,18 @@ const userSchema = new mongoose.Schema({
   },
   passwordResetTokenExpireTime: {
     type: Date
+  },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false
   }
+});
+
+
+userSchema.pre(/^find/, function(next) {
+  this.find({ active: { $ne: false } });
+  next();
 });
 
 userSchema.pre('save', async function(next) {

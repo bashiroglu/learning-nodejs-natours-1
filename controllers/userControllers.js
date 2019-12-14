@@ -10,6 +10,19 @@ const filterObj = (obj, ...allowFields) => {
   return newObj;
 };
 
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+
+  //send response
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users
+    }
+  });
+});
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('this is not for to change password'), 400);
@@ -30,16 +43,16 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(new AppError('this is not for to change password'), 400);
+  }
 
-  //send response
-  res.status(200).json({
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+
+  res.status(204).json({
     status: 'success',
-    results: users.length,
-    data: {
-      users
-    }
+    data: null
   });
 });
 
