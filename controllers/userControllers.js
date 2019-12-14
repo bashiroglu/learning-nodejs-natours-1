@@ -63,13 +63,6 @@ exports.getUser = (req, res) => {
   });
 };
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'route has not defined yet'
-  });
-};
-
 exports.addNewUser = (req, res) => {
   res.status(500).json({
     status: 'error',
