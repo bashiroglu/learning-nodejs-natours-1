@@ -66,6 +66,15 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined;
   next();
 });
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  /* we substract 1s to prevent to happen of
+   gereneting token before changed time, otherwise our login function don't
+   allow that user to enter */
+  next();
+});
 
 userSchema.methods.comparePass = async function(candidatePass, userPass) {
   return await bcrypt.compare(candidatePass, userPass);
@@ -85,7 +94,6 @@ userSchema.methods.createPasswordResetToken = async function() {
     .update(resetToken)
     .digest('hex');
   this.passwordResetTokenExpireTime = Date.now() + 10 * 60 * 1000;
-  console.log({ resetToken }, this.passwordResetToken);
 
   return resetToken;
 };
