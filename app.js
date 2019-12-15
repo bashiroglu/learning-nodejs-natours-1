@@ -1,5 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
+const helmet = require('helmet');
+const MongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -7,7 +11,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorControllers');
 
 const app = express();
-
+app.use(helmet());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -19,7 +23,24 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
+app.use(MongoSanitize());
+app.use(xss());
+
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price'
+    ]
+  })
+);
+
+app.use(express.json({ limit: '10kb' }));
 app.use(express.static(`${__dirname}/public`));
 
 app.use('/api/v1/tours', tourRouter);

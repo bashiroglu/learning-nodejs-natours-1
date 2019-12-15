@@ -21,10 +21,11 @@ Used Languages and concepts:
 15. Error handling
 16. crypto
 17. nodemailer
-18. 
-
-
-
+18. helmet
+19. express-rate-limit
+20. express-mongo-sanitize'
+21. xss-clean
+22. hpp
 
 After download project files, in the project directory, you can run :
 
