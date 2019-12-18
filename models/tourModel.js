@@ -114,6 +114,13 @@ tourSchema.pre(/^find/, function(next) {
   this.find({ secretTour: { $ne: true } });
   next();
 });
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt'
+  });
+  next();
+});
 tourSchema.pre('aggregate', function(next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
   next();
