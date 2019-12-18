@@ -29,9 +29,10 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 });
 
 exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate(
-    'guides'
-  ); /* with this code we send whole guides user object to request */
+  const tour = await Tour.findById(req.params.id).populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt'
+  }); /* with this code we say that extact this props from response data*/
   if (!tour) {
     return next(new AppError('No tour found with this Id', 404));
   }
