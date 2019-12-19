@@ -20,10 +20,10 @@ Used Languages and concepts:
 14. util.promisify
 15. Error handling
 16. crypto
-17. nodemailer
+17. nodemailer(with gmail)
 18. helmet, express-rate-limit, express-mongo-sanitize
 19. xss-clean, hpp
-20. 
+20. Factory function concept
 21. 
 22. 
 
