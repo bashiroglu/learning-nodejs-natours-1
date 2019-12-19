@@ -7,7 +7,7 @@ const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
-  .get(reviewControllers.getAllgetAllReviews)
+  .get(reviewControllers.getAllReviews)
   .post(
     authControllers.protect /* This prevent unlogged user to review */,
     authControllers.restrictTo(
@@ -18,6 +18,7 @@ router
   );
 router
   .route('/:id')
+  .get(reviewControllers.getReview)
   .patch(reviewControllers.updateReview)
   .delete(reviewControllers.deleteReview);
 
