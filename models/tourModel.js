@@ -105,6 +105,14 @@ const tourSchema = new mongoose.Schema(
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
+tourSchema.virtual('reviews', {
+  ref: 'Review' /*reference to model  */,
+  foreignField:
+    'tour' /* the place where current model id is stored in the forigien model   */,
+  localField:
+    '_id' /* the place where current model id is stored in here, kinda comparison of this 2 fields and to know that this is conected to this one  */
+});
+
 tourSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();
