@@ -4,10 +4,14 @@ const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
 
 exports.getAllgetAllReviews = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Review.find(), req.query);
+  let filter = {}; /* we create filter */
+  if (!req.params.tourId)
+    filter = {
+      tour: req.params.tourId
+    }; /* we update filter to send this object to find query and to get only reviews are owned that tour */
 
+  const features = new APIFeatures(Review.find(filter), req.query);
   const reviews = await features.query;
-
   //send response
   res.status(200).json({
     status: 'success',
