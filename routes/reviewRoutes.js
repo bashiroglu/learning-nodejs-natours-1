@@ -13,7 +13,12 @@ router
     authControllers.restrictTo(
       'user'
     ) /* this is to give only user acces to review */,
+    reviewControllers.setTourUserIds,
     reviewControllers.addNewReview
   );
+router
+  .route('/:id')
+  .patch(reviewControllers.updateReview)
+  .delete(reviewControllers.deleteReview);
 
 module.exports = router;
