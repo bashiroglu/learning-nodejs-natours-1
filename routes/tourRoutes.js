@@ -10,6 +10,12 @@ const router = express.Router();
 router.use('/:tourId/reviews', reviewRoutes);
 
 router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(tourControllers.getToursWithin);
+
+
+
+router
   .route('/top5tours')
   .get(tourControllers.getTopTours, tourControllers.getAllTours);
 

@@ -104,6 +104,7 @@ const tourSchema = new mongoose.Schema(
 );
 
 tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
 
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
@@ -132,10 +133,10 @@ tourSchema.pre(/^find/, function(next) {
   });
   next();
 });
-tourSchema.pre('aggregate', function(next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-  next();
-});
+// tourSchema.pre('aggregate', function(next) {
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//   next();
+// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 
