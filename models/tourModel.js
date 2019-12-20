@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
-
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -33,7 +32,8 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       default: 4.5,
       min: [0, '0-5 '],
-      max: [5, '0-5 ']
+      max: [5, '0-5 '],
+      set: val => Math.round(val * 10) / 10
     },
     ratingsQuantity: {
       type: Number,
