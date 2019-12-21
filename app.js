@@ -10,6 +10,7 @@ const path = require('path');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorControllers');
 
@@ -50,23 +51,7 @@ app.use(
 
 app.use(express.json({ limit: '10kb' }));
 
-app.get('/', (req, res) => {
-  res.status(200).render('base', {
-    tour: 'Quba',
-    user: 'Abdulla'
-  });
-});
-app.get('/overview', (req, res) => {
-  res.status(200).render('overview', {
-    title: 'All tours'
-  });
-});
-app.get('/tour', (req, res) => {
-  res.status(200).render('tour', {
-    title: 'tour quba'
-  });
-});
-
+app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
