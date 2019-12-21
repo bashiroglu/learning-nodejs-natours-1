@@ -51,7 +51,10 @@ app.use(
 app.use(express.json({ limit: '10kb' }));
 
 app.get('/', (req, res) => {
-  res.status(200).render('base');
+  res.status(200).render('base', {
+    tour: 'Quba',
+    user: 'Abdulla'
+  });
 });
 
 app.use('/api/v1/tours', tourRouter);

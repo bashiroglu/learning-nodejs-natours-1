@@ -1,1 +1,15 @@
-h1 Abdulla
+DOCTYPE
+html
+    head 
+    //- be can embed the variable in text like below
+    title Abdulla | #{tour} 
+    link(ref='stylesheet' href='css/style.css') 
+    link(rel='shortcut icon' type='image/png' href='img/favicon.png' ) 
+
+    body 
+    
+        h1 tour 
+        //- above is just text
+        h1= tour 
+        -const a=5 //- we can write js code like this
+        h2= tour.toUpperCase() + a //- we can write js code like this
