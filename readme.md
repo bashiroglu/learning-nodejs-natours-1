@@ -24,8 +24,9 @@ Used Languages and concepts:
 18. helmet, express-rate-limit, express-mongo-sanitize
 19. xss-clean, hpp
 20. Factory function concept
-21. 
-22. 
+21. pug(view engine)
+22. MVC pattern
+23. 
 
 After download project files, in the project directory, you can run :
 
