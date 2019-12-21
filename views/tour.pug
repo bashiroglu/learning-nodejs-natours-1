@@ -3,9 +3,12 @@ extends base
 //- we use below code to get rid of repeated code
 include _reviewCard
 include _overviewBox
+block append head
+  script(src='/js/mapbox.js' defer)
 
 
 block content
+
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
@@ -56,7 +59,7 @@ block content
       - const parapraphs = tour.description.split('\n');
       each p in parapraphs
         p.description__text= p
-        
+
     
 
   section.section-pictures
@@ -71,6 +74,9 @@ block content
     .reviews
       each review in tour.reviews
         +reviewCard(review)
+
+  section.section-map
+    #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
   section.section-cta
     .cta

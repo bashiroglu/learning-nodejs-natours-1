@@ -17,7 +17,7 @@ exports.getTourDetails = catchAsync(async (req, res) => {
   });
 
   res.status(200).render('tour', {
-    title: 'hjjh',
+    title: `${tour.name} Tour`,
     tour
   });
 });
