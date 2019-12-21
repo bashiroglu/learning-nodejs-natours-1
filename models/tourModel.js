@@ -71,6 +71,10 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    description: {
+      type: String,
+      trim: true
+    },
     startDates: [Date],
     startLocation: {
       type: {
@@ -95,6 +99,7 @@ const tourSchema = new mongoose.Schema(
         day: Number
       }
     ],
+
     guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
   },
   {

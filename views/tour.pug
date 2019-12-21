@@ -50,13 +50,14 @@ block content
               - if (guide.role === 'guide')
                 span.overview-box__label Tour guide
               span.overview-box__text= guide.name
-
+              
     .description-box
       h2.heading-secondary.ma-bt-lg= `About ${tour.name} tour`
-      //- we split code to show them in paragraphs and we do that by using pug loop
       - const parapraphs = tour.description.split('\n');
       each p in parapraphs
         p.description__text= p
+        
+    
 
   section.section-pictures
     //- we use index to have different kind of classes 
