@@ -12,6 +12,7 @@ const logIn = async (email, password) => {
       }
     });
     console.log(email, password);
+    console.log(res);
   } catch (error) {
     console.log(error.response);
   }
