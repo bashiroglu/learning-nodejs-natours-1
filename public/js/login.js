@@ -1,18 +1,19 @@
 /* eslint-disable */
-console.log('hello')
+console.log('hello');
 const logIn = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url:
+        'http://localhost:8000/api/v1/users/login' /* use local host for CORS Error*/,
       data: {
         email,
         password
       }
     });
-    console.log(email,password);
+    console.log(email, password);
   } catch (error) {
-    // console.log(error.response);
+    console.log(error.response.data);
   }
 };
 
