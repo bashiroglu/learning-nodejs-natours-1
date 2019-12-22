@@ -5,10 +5,10 @@ const authControllers = require('../controllers/authControllers');
 
 const router = express.Router();
 
+router.use(authControllers.isLogedIn);
+
 router.get('/', viewControllers.getOverview);
-
 router.get('/login', viewControllers.getLogin);
-
 router.get(
   '/tour/:slug',
   authControllers.protect,
