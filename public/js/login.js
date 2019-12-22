@@ -5,7 +5,7 @@ const logIn = async (email, password) => {
     const res = await axios({
       method: 'POST',
       url:
-        'http://localhost:8000/api/v1/users/login' /* use local host for CORS Error*/,
+        'http://localhost:3000/api/v1/users/login' /* use local host for CORS Error*/,
       data: {
         email,
         password
@@ -13,7 +13,7 @@ const logIn = async (email, password) => {
     });
     console.log(email, password);
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response);
   }
 };
 
