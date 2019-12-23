@@ -6,7 +6,7 @@ import { logOut } from './login';
 import { displayMap } from './mapbox';
 
 const mapBox = document.getElementById('map');
-const loginForm = document.querySelector('.form');
+const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 if (loginForm) {
   loginForm.addEventListener('submit', e => {

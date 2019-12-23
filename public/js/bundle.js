@@ -8431,8 +8431,13 @@ function () {
 
           case 3:
             res = _context2.sent;
-            if (res.data.status = 'success') location.reload(true);
-            /* this true means hard, in other words, bring from server */
+
+            if (res.data.status = 'success') {
+              window.setTimeout(function () {
+                location.assign('/');
+              }, 400);
+              location.reload(true);
+            }
 
             _context2.next = 11;
             break;
@@ -8772,7 +8777,7 @@ var _login = require("./login");
 var _mapbox = require("./mapbox");
 
 var mapBox = document.getElementById('map');
-var loginForm = document.querySelector('.form');
+var loginForm = document.querySelector('.form--login');
 var logOutBtn = document.querySelector('.nav__el--logout');
 
 if (loginForm) {
@@ -8820,7 +8825,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50415" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62708" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
