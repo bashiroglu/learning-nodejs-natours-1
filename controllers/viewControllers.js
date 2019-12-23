@@ -20,7 +20,7 @@ exports.getTourDetails = catchAsync(async (req, res, next) => {
   if (!tour) {
     return next(new AppError('There is no tour with that name.', 404));
   }
-  
+
   res.status(200).render('tour', {
     title: `${tour.name} Tour`,
     tour
@@ -30,5 +30,10 @@ exports.getTourDetails = catchAsync(async (req, res, next) => {
 exports.getLoginForm = (req, res) => {
   res.status(200).render('login', {
     title: 'Log into your account'
+  });
+};
+exports.getAccount = (req, res) => {
+  res.status(200).render('account', {
+    title: 'Your account'
   });
 };
