@@ -90,11 +90,17 @@ userSchema.pre('save', async function(next) {
 userSchema.methods.comparePass = async function(candidatePass, userPass) {
   return await bcrypt.compare(candidatePass, userPass);
 };
-userSchema.methods.changedPasswordAfter = async function(JWTTimeStamp) {
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   if (this.passwordChangedAt) {
-    const changedTimeStamp = parseInt(this.passwordChangedAt / 1000, 10);
-    return JWTTimeStamp < changedTimeStamp;
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
   }
+
+  // False means NOT changed
   return false;
 };
 userSchema.methods.createPasswordResetToken = async function() {

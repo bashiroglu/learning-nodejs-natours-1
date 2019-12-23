@@ -54,4 +54,5 @@ if (process.argv[2] === '--import') {
 } else if (process.argv[2] === '--delete') {
   deleteDataFromDb();
 }
+//turn of save middleware functions before this one
 // node ./dev-data/data/import-dev-data.js --delete

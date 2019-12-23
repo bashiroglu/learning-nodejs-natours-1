@@ -89,6 +89,34 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = freshUser;
   next();
 });
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    // 1) we verify token here
+
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+
+    // 2) Check whether user still exists or not
+    const freshUser = await User.findById(decoded.id);
+    if (!freshUser) {
+      return next();
+    }
+
+    // 3) we check whether user changed password after the token was issued
+    if (freshUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    } /* I should watch this part again */
+
+    // it means we have user and we send it via locals to all pug files
+    res.locals.user = freshUser;
+    return next();
+  }
+  next();
+});
+
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
@@ -167,21 +195,4 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
   createAndSendToken(user, 200, res);
-});
-exports.isLogedIn = catchAsync(async (req, res, next) => {
-  if (req.cookies.jwt) {
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-    const freshUser = await User.findById(decoded.id);
-    if (!freshUser) {
-      return next(new AppError('this user is not longer available', 401));
-    }
-    if (freshUser.changedPasswordAfter(decoded.iat)) {
-      return next();
-    }
-    res.locals.user = freshUser;
-    next();
-  }
-
-  next();
 });
