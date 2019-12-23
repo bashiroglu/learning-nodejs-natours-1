@@ -1,6 +1,8 @@
 /* eslint-disable */
-console.log('hello');
-const logIn = async (email, password) => {
+
+import axios from 'axios';
+
+export const logIn = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
@@ -23,10 +25,3 @@ const logIn = async (email, password) => {
     console.log(error.response);
   }
 };
-
-document.querySelector('.form').addEventListener('submit', e => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  logIn(email, password);
-});
