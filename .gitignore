@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.cache
 /.pnp
 .pnp.js
 .config.env
@@ -11,6 +12,7 @@
 
 # production
 /build
+/.cache
 
 # misc
 .DS_Store
