@@ -33,10 +33,16 @@ export const logOut = async () => {
       method: 'GET',
       url: 'http://localhost:3000/api/v1/users/logout'
     });
-    if ((res.data.status = 'success'))
+    if ((res.data.status = 'success')) {
+      window.setTimeout(() => {
+        location.assign(
+          '/'
+        ); 
+      }, 400);
       location.reload(
         true
-      ); /* this true means hard, in other words, bring from server */
+      );
+    }
   } catch (err) {
     console.log(err.response);
     showAlert('error', 'Error logging out! Try again.');
