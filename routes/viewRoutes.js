@@ -14,6 +14,10 @@ router.get(
 );
 router.get('/me', authControllers.protect, viewControllers.getAccount);
 
-router.post('/submit-user-data', viewControllers.updateUserData);
+router.post(
+  '/submit-user-data',
+  authControllers.protect,
+  viewControllers.updateUserData
+);
 
 module.exports = router;

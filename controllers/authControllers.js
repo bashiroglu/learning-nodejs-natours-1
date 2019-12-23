@@ -135,7 +135,9 @@ exports.logout = (req, res) => {
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new AppError(`you don't have permission`, 403));
+      return next(
+        new AppError(`you don't have permission from restrict to`, 403)
+      );
     }
     next();
   };
@@ -209,5 +211,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
+
   createAndSendToken(user, 200, res);
 });

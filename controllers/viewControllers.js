@@ -39,8 +39,20 @@ exports.getAccount = (req, res) => {
   });
 };
 exports.updateUserData = catchAsync(async (req, res, next) => {
-  console.log(
-    req.body
-  ); /* this was not working because
-   we changed the code in index.js but didn't bundle our code again */
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      name: req.body.name,
+      email: req.body.email
+    },
+    {
+      new: true,
+      runValidators: true /* we run our validators in model */
+    }
+  );
+
+  res.status(200).render('account', {
+    title: 'Your account',
+    user: updatedUser /* we have to send this otherwise, the user fill come protect route */
+  });
 });
