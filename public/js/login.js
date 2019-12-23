@@ -11,6 +11,14 @@ const logIn = async (email, password) => {
         password
       }
     });
+    if (res.data.status === 'success') {
+      alert('logged in');
+      window.setTimeout(() => {
+        location.assign(
+          '/'
+        ); /* this is for rendering again, in other words to reload page again */
+      }, 1500);
+    }
   } catch (error) {
     console.log(error.response);
   }
