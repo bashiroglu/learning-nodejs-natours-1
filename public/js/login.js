@@ -23,6 +23,22 @@ export const logIn = async (email, password) => {
       }, 1500);
     }
   } catch (error) {
-    showAlert('error', error.response);
+    showAlert('error', error.response.data.message);
+    // console.log(error.response);
+  }
+};
+export const logOut = async () => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: 'http://localhost:3000/api/v1/users/logout'
+    });
+    if ((res.data.status = 'success'))
+      location.reload(
+        true
+      ); /* this true means hard, in other words, bring from server */
+  } catch (err) {
+    console.log(err.response);
+    showAlert('error', 'Error logging out! Try again.');
   }
 };

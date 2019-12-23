@@ -90,32 +90,46 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.isLoggedIn = catchAsync(async (req, res, next) => {
+exports.isLoggedIn = async (req, res, next) => {
+  /* we had to change this function to local error handling by using try catch block
+   because while loggin out this function check the jwt and cannot promisfy, and throw error
+  so this is not something we want that is why we
+   didin't use asycn catch, as a result this function coun't thre global error */
   if (req.cookies.jwt) {
     // 1) we verify token here
+    try {
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
 
-    const decoded = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRET
-    );
+      // 2) Check whether user still exists or not
+      const freshUser = await User.findById(decoded.id);
+      if (!freshUser) {
+        return next();
+      }
 
-    // 2) Check whether user still exists or not
-    const freshUser = await User.findById(decoded.id);
-    if (!freshUser) {
+      // 3) we check whether user changed password after the token was issued
+      if (freshUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      } /* I should watch this part again */
+
+      // it means we have user and we send it via locals to all pug files
+      res.locals.user = freshUser;
+      return next();
+    } catch (error) {
       return next();
     }
-
-    // 3) we check whether user changed password after the token was issued
-    if (freshUser.changedPasswordAfter(decoded.iat)) {
-      return next();
-    } /* I should watch this part again */
-
-    // it means we have user and we send it via locals to all pug files
-    res.locals.user = freshUser;
-    return next();
   }
   next();
-});
+};
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+  res.status(200).json({ status: 'success' });
+};
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
