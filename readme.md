@@ -26,7 +26,8 @@ Used Languages and concepts:
 20. Factory function concept
 21. pug(view engine)
 22. MVC pattern
-23. 
+23. multer
+24. 
 
 After download project files, in the project directory, you can run :
 

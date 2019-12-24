@@ -1,8 +1,34 @@
 const User = require('./../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-
+const multer = require('multer');
 const factory = require('../controllers/handleFactory');
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'puclic/img/users'); /* this is where we want to store our file */
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split(
+      '/'
+    )[1]; /* mimtype is a string in file object like image/img */
+    cb(
+      null,
+      `user-${req.user.id}-${Date.now()}.${ext}`
+    ); /* we made its name here */
+  }
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    /* we check mimtype is image or not, if not we throw global error*/
+    cb(null, true);
+  } else {
+    cb(new AppError('please upload image', 400), false);
+  }
+};
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
 const filterObj = (obj, ...allowFields) => {
   const newObj = {};
@@ -11,6 +37,7 @@ const filterObj = (obj, ...allowFields) => {
   });
   return newObj;
 };
+exports.uploadUserPhoto = upload.single('photo');
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
