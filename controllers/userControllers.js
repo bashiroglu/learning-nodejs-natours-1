@@ -6,16 +6,11 @@ const factory = require('../controllers/handleFactory');
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'puclic/img/users'); /* this is where we want to store our file */
+    cb(null, 'public/img/users');
   },
   filename: (req, file, cb) => {
-    const ext = file.mimetype.split(
-      '/'
-    )[1]; /* mimtype is a string in file object like image/img */
-    cb(
-      null,
-      `user-${req.user.id}-${Date.now()}.${ext}`
-    ); /* we made its name here */
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
   }
 });
 
@@ -45,7 +40,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   const filteredBody = filterObj(req.body, 'name', 'email');
-
+  if (req.file) filteredBody.photo = req.file.filename;
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true
