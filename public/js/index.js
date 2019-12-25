@@ -4,12 +4,15 @@ import '@babel/polyfill';
 import { logIn } from './login';
 import { logOut } from './login';
 import { updateSettings } from './updateSetting';
+import { bookTour } from './stripe';
+
 
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
+const bookBtn = document.getElementById('book-tour');
 
 if (loginForm) {
   loginForm.addEventListener('submit', e => {
@@ -27,6 +30,13 @@ if (mapBox) {
 if (logOutBtn) {
   logOutBtn.addEventListener('click', logOut);
 }
+if (bookBtn)
+  bookBtn.addEventListener('click', e => {
+    e.target.textContent = 'Processing...';
+    const { tourId } = e.target.dataset;
+    bookTour(tourId);
+  });
+
 
 if (userDataForm)
   userDataForm.addEventListener('submit', e => {
