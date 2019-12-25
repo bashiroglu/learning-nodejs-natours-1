@@ -43,8 +43,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     /* role: req.body.role  this shouldn't be here because user can not make himself admin*/
   });
 
-  // const url = `${req.protocol}://${req.get('host')}/me`;
-  const url = `http://localhost:3000/me`;
+  const url = `${req.protocol}://${req.get('host')}/me`;
+  // const url = `http://localhost:3000/me`;
   /* we use sendwelcome function in email class to welcome who signed up */
   await new Email(newUser, url).sendWelcome();
 
@@ -159,10 +159,10 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
   // 3) Generate resetURL and message
 
   try {
-    const resetURL = `http://localhost:3000/api/v1/users/resetPassword/${resetToken}`;
-    // const resetURL = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/v1/users/resetPassword/${resetToken}`;
+    // const resetURL = `http://localhost:3000/api/v1/users/resetPassword/${resetToken}`;
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${resetToken}`;
     /* we use sendPasswordReset function in email class to send token who forget his or her token*/
     await new Email(user, resetURL).sendPasswordReset();
 
