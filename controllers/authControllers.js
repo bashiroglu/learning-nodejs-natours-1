@@ -4,7 +4,7 @@ const { promisify } = require('util');
 const User = require('./../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const sendEmail = require('../utils/email');
+const Email = require('./../utils/email');
 
 const signToken = id => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -33,7 +33,6 @@ const createAndSendToken = (user, statusCode, res) => {
     }
   });
 };
-
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
@@ -43,6 +42,12 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordChangedAt: req.body.passwordChangedAt
     /* role: req.body.role  this shouldn't be here because user can not make himself admin*/
   });
+
+  // const url = `${req.protocol}://${req.get('host')}/me`;
+  const url = `http://localhost:3000/me`;
+  /* we use sendwelcome function in email class to welcome who signed up */
+  await new Email(newUser, url).sendWelcome();
+
   createAndSendToken(newUser, 201, res);
 });
 
@@ -152,18 +157,14 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
   const resetToken = await user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
   // 3) Generate resetURL and message
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\n Otherwise, ignore this email!`;
-  // 4) Send it to user's email by using send to funtion
 
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your password reset token (valid for 10 min)',
-      message
-    });
+    const resetURL = `http://localhost:3000/api/v1/users/resetPassword/${resetToken}`;
+    // const resetURL = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/api/v1/users/resetPassword/${resetToken}`;
+    /* we use sendPasswordReset function in email class to send token who forget his or her token*/
+    await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',
