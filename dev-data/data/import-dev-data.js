@@ -31,9 +31,9 @@ const importData = async () => {
     await Tour.create(tours);
     await User.create(users, { validateBeforeSave: false });
     await Review.create(reviews);
-    console.log('data succesfully loaded');
+    
   } catch (error) {
-    console.log(error);
+   
   }
   process.exit();
 };
